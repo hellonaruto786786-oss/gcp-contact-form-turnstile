@@ -15,6 +15,8 @@ function showStatus(message, type) {
 }
 
 /*
+ * Step 1: Turnstile is initialized
+ * This function runs when the Turnstile API script invokes the configured onTurnstileLoad callback.
  * Initialize Turnstile when its API script loads.
  *
  * execution: "execute" ensures the challenge does not execute automatically.
@@ -29,7 +31,7 @@ window.onTurnstileLoad = function () {
       execution: "execute",
       appearance: "execute",
 
-      // Called after Turnstile successfully generates a token.
+      // Step 5: Turnstile returns a token - Called after Turnstile successfully generates a token.
       callback: function (token) {
         if (!pendingTurnstileSubmission) {
           return;
@@ -67,6 +69,7 @@ window.onTurnstileLoad = function () {
 };
 
 /*
+ * Step 2: The user clicks Submit
  * Start verification only after the user clicks Submit.
  */
 form.addEventListener("submit", (event) => {
@@ -86,7 +89,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  // Prevent duplicate submissions.
+  // Step 3: Duplicate submissions are prevented 
   if (pendingTurnstileSubmission) {
     return;
   }
@@ -97,7 +100,7 @@ form.addEventListener("submit", (event) => {
   showStatus("", "");
 
   try {
-    // The invisible challenge executes here, after the Submit click.
+    // Step 4: Turnstile executes - The invisible challenge executes here, after the Submit click.
     window.turnstile.execute(turnstileWidgetId);
   } catch (error) {
     pendingTurnstileSubmission = false;
@@ -112,6 +115,7 @@ form.addEventListener("submit", (event) => {
 });
 
 /*
+* Step 6: The contact request includes the token
  * Submit the contact request only after Turnstile provides a token.
  */
 async function submitContactForm(token) {
