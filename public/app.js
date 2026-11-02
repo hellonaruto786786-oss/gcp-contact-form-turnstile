@@ -41,7 +41,7 @@ window.onTurnstileLoad = function () {
         submitContactForm(token);
       },
 
-      // Handle verification errors.
+      // Step 8: Turnstile errors are handled - Handle verification errors.
       "error-callback": function () {
         pendingTurnstileSubmission = false;
         submitButton.disabled = false;
