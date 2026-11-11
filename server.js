@@ -14,6 +14,13 @@ app.disable("x-powered-by");
 
 app.use(
   helmet({
+    contentSecurityPolicy: false
+  })
+);
+
+/*
+app.use(
+  helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
@@ -40,7 +47,7 @@ app.use(
     }
   })
 );
-
+*/
 app.use(express.json({ limit: MAX_BODY_SIZE }));
 
 app.use(express.static(path.join(__dirname, "public")));
